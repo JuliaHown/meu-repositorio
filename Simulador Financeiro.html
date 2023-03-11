@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador financeiro</title>
+</head>
+<body>
+    
+    Número de dias em que a empresa abre:
+    <input id="inputDiasEP"><br>
+    Total de lâmpadas utilizadas por sala/ambiente:
+    <input id="inputQtdLampadas"><br>
+    Total de salas/ambientes na sua empresa:
+    <input id="inputQtdSalas"> <br>
+    Potência das lâmpadas usadas:
+    <input id="inputPotenciaL"><br>
+    Tempo (horas) em que as lâmpadas ficam ligadas por dia: 
+    <input id="inputHorasLamp"><br><br>
+
+    <button onclick="simular()">
+        Simular solução
+    </button>
+
+    <div id="gastos"></div>
+    <div id="comSoluçao"></div>
+
+</body>
+</html>
+
+<script>
+
+    function simular() {
+        var qtdLampadas = Number(inputQtdLampadas.value)
+        var qtdSalas = Number(inputQtdSalas.value)
+        var potênciaLampadas = Number(inputPotenciaL.value)
+        var dias = Number(inputDiasEP.value) * 4 //número de semanas em um mês//
+        var horasLigadas = Number(inputHorasLamp.value)
+        var valorKwh = 0.86
+        var custoLampEmKwh = (potênciaLampadas * horasLigadas * dias) / 1000 .toFixed(2) //transformar Watts em kW//
+        var gastoTotal = (custoLampEmKwh * valorKwh * qtdLampadas * qtdSalas).toFixed(2)
+        var descontoAbatido = (gastoTotal * 0.3).toFixed(2)
+        var fatura = (gastoTotal - descontoAbatido).toFixed(2)
+
+        gastos.innerHTML = `<h2>Segundo a análise LighTech</h2>O seu gasto mensal com conta de luz é de <b>R$${gastoTotal}</b>. <br>`
+
+        comSoluçao.innerHTML = `Usando a nossa solução de monitoramento de luz para a sua empresa, o seu 
+        gasto com a conta de energia cairá para, mais ou menos, <b>R$${fatura}</b> <br> Sendo assim, você poderá economizar pelo menos <b>R$${descontoAbatido}.</br>`
+    }
+
+</script>
